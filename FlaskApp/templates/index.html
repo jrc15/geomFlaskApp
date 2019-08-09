@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+            rel="stylesheet">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <style>
+            .imgContainer{
+                float:left;
+                width: 33.33%;
+                padding: 30px;
+            }
+            p {
+                text-align:center;
+            }
+            body {
+                padding : 10px ;
+                
+            }
+            h5 {
+                color: red;
+            }
+        
+            #exTab1 .tab-content {
+                color : white;
+                background-color: #428bca;
+                padding : 5px 15px;
+            }
+        
+            #exTab2 h3 {
+                color : white;
+                background-color: #428bca;
+                padding : 5px 15px;
+            }
+        
+            /* remove border radius for the tab */
+            
+            #exTab1 .nav-pills > li > a {
+                border-radius: 0;
+            }
+        
+            /* change border radius for the tab , apply corners on top*/
+            
+            #exTab3 .nav-pills > li > a {
+                border-radius: 4px 4px 0 0 ;
+            }
+        
+            #exTab3 .tab-content {
+                color : white;
+                background-color: #428bca;
+                padding : 5px 15px;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div style="display: flex; justify-content: center;">
+            <img src="static/images/GEOM_Logo.png" alt="GEOM Logo" style="width:500px;height:200px;margin:15px 0px"/>
+        </div>
+        <div class="header">
+            <h1 align="center">GEOM: Hydrological Analysis</h1>
+        </div>
+        <br>
+         <div class="container">
+             <ul class="nav nav-tabs">
+                 <li class="active"><a data-toggle="tab" href="#home">Functions</a></li>
+                 <li><a data-toggle="tab" href="#menu1">Usage</a></li>
+                 <li><a data-toggle="tab" href="#menu2">Example</a></li>
+                 <li><a data-toggle="tab" href="#menu3">Outputs</a></li>
+                 <li><a data-toggle="tab" href="#menu4">README</a></li>
+                 <li><a data-toggle="tab" href="#menu5">License</a></li>
+                 <li><a data-toggle="tab" href="#menu6">About GEOM</a></li>
+                 <li><a data-toggle="tab" href="#menu7">GEOM Apps</a></li>
+                 
+                 <form action="logout" method="get" enctype="multipart/form-data">
+                     <input type="submit" value="Logout"  class="span2" style="margin:5px;">
+                 </form>
+
+             </ul>
+             
+             <div class="tab-content">
+                 <div id="home" class="tab-pane fade in active">
+                     <h3>FUNCTIONS</h3>
+                     <div class="container">
+                         <hr/>
+                         <div>
+                             <form action="upload" method="post" enctype="multipart/form-data">
+                                 <input type="file" multiple="" name="file[]" class="span3" /><br />
+                                 <input type="submit" value="Upload"  class="span2" style="margin:5px;">
+                                     <img src="static/images/DEM.png" alt="GEOM Logo" align="right" style="width:500px;height:350px;"/>
+                             </form>
+                             
+                             <form action="Stream" method="get" enctype="multipart/form-data">
+                                 <input type="submit" value="Stream Delineation"  class="span2" style="margin:5px;"> -> This may take a few minutes to complete
+                             </form>
+            
+                             <form action="Contamination" method="get" enctype="multipart/form-data">
+                                 <input type="submit" value="Contamination Areas"  class="span2" style="margin:5px;">
+                             </form>
+                             
+                             <form action="Hand" method="get" enctype="multipart/form-data">
+                                 <input type="submit" value="HAND - Height Above Nearest Drainage"  class="span2" style="margin:5px;">
+                             </form>
+                             
+                             <form action="Twi" method="get" enctype="multipart/form-data">
+                                 <input type="submit" value="TWI - Topographic Wetness Index"  class="span2" style="margin:5px;">
+                             </form>
+                             
+                             <form action="Tidy" method="get" enctype="multipart/form-data">
+                                 <input type="submit" value="Delete Unneeded Files"  class="span2" style="margin:5px;">
+                             </form>
+                             
+                             <form action="Sort" method="get" enctype="multipart/form-data">
+                                 <input type="submit" value="Tidy Files"  class="span2" style="margin:5px;">
+                             </form>
+                             
+                             <form action="download" method="get" enctype="multipart/form-data">
+                                 <input type="submit" value="Download Outputs"  class="span2" style="margin:5px;">
+                             </form>
+                             <br>
+                             <form action="reset" method="get" enctype="multipart/form-data">
+                                 <input type="submit" value="Reset Web App"  class="span2" style="margin:5px;">
+			     </form>
+                         </div>
+                         <hr/>
+                         <div>
+                             {% with messages = get_flashed_messages() %}
+                                 {% if messages %}
+                                     <h4>{{ 'Function Progress:' }}</h4>
+                                     {% for message in messages %}
+                                         <h5>{{ message }}</h5>
+                                     {% endfor %}
+                                 {% endif %}
+                             {% endwith %}
+                         </div>
+                         <hr/>
+                         <br>
+                         <div class="image123">
+                             <div class="imgContainer">
+                                 <img src="static/images/Picture1.png" height="350" width="350"/>
+                                 <p>Basin Watershed of the River Belice in Sicily</p>
+                             </div>
+                             <div class="imgContainer">
+                                 <img class="middle-img" src="static/images/Picture2.png"/ height="350" width="350"/>
+                                 <p>HAND of the River Belice in Sicily</p>
+                             </div>
+                             <div class="imgContainer">
+                                 <img src="static/images/Picture3.png"/ height="350" width="350"/>
+                                 <p>Contamination Flow of the River Belice in Sicily</p>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 
+                 <div id="menu1" class="tab-pane fade">
+                     <h3>USAGE</h3>
+                     <div class="container">
+                         <div>
+                             <hr/>
+                             <li>UPLOAD              | Uploads the files choosen files to an online directory ready for processing.</li>
+                             <hr/>
+                             <li>STREAM DELINEATION  | Processes input data and Outputs Stream Network, Watershed and Flow Directions for the DEM and the stream basin.</li>
+                             <ul></ul>
+                             <ul>INPUT REQUIREMENTS:</ul>
+                             <ul>1. DEM -> FORMAT: tif, NAMED: DEM.tif</ul>
+                             <ul>2. OUTLET -> FORMAT: shp, NAMED: Outlet.shp</ul>
+                             <ul>3. BASIN -> FORMAT: shp, NAMED: Basin.shp</ul>
+                             <hr/>
+                             <li>CONTAMINATION AREAS | Calculates the contamination flow of a substance defined by a source file.</li>
+                             <ul></ul>
+                             <ul>REQUIREMENTS:</ul>
+                             <ul>1. Stream Delineation process must be undertaken prior to this.</ul>
+                             <ul></ul>
+                             <ul>INPUT REQUIREMENTS:</ul>
+                             <ul>1. SOURCE -> FORMAT: shp, NAMED: Source.shp</ul>
+                             <hr/>
+                             <li>HEIGHT ABOVE NEAREST DRAINAGE | Calculates the height above nearest drainage for each cell within the stream basin.</li>
+                             <ul></ul>
+                             <ul>REQUIREMENTS:</ul>
+                             <ul>1. Stream Delineation process must be undertaken prior to this.</ul>
+                             <hr/>
+                             <li>TOPOGRAPHIC WETNESS INDEX | Calculates the topographic wetness index of each cell within the stream basin.</li>
+                             <ul>REQUIREMENTS:</ul>
+                             <ul>1. Stream Delineation process must be undertaken prior to this.</ul>
+                             <hr/>
+                             <li>DELETE UNNEEDED FILES | Deletes files which are calculated throughout the process, but do not display overall process results.</li>
+                             <ul></ul>
+                             <ul>REQUIREMENTS:</ul>
+                             <ul>Must be run before TIDY FILES function</ul>
+                             <hr/>
+                             <li>TIDY FILES | Organise files into a filing system.</li>
+                             <hr/>
+                             <li>DOWNLOAD OUTPUTS | Downloads all processed and input files </li>
+                             <hr/>
+                         </div>
+                     </div>
+                 </div>
+                 
+                 <div id="menu2" class="tab-pane fade">
+                     <h3>EXAMPLES</h3>
+                     <div class="container">
+                         <br>
+                         <li>1. Choose Files</li>
+                         <li>2. Upload Files</li>
+                         <li>3. Stream Delineation</li>
+                         <li>4. Possible Options (and/or/skip):</li>
+                         <ul></ul>
+                         <ul>4.a Contamination Areas</ul>
+                         <ul>4.b HAND</ul>
+                         <ul>4.c TWI</ul>
+                         <li>5. Delete Unneeded Files (if you wish to keep all files, skip this step)</li>
+                         <li>6. Download Files</li>
+                         <hr/>
+                     </div>
+                 </div>
+                 
+                 <div id="menu3" class="tab-pane fade">
+                     <h3>OUTPUTS</h3>
+                     <br>
+                     <div class="container">
+                         <div class="header">
+                             <table style="width:100%">
+                                 <tr>
+                                     <th>Output File Ending (DEM/BASIN)</th>
+                                     <th>Description</th>
+                                 </tr>
+                                 <tr>
+                                     <td>d8</td>
+                                     <td>D8 contributing area grid</td>
+                                 </tr>
+                                 <tr>
+                                     <td>p </td>
+                                     <td> D8 flow direction grid</td>
+                                 </tr>
+                                 <tr>
+                                     <td>sd8 </td>
+                                     <td> D8 slope grid</td>
+                                 </tr>
+                                 <tr>
+                                    <td>ad8 </td>
+                                    <td> D8 contributing area grid</td>
+                                 </tr>
+                                 <tr>
+                                     <td>ang </td>
+                                     <td> D-infinity flow direction grid</td>
+                                 </tr>
+                                 <tr>
+                                     <td>slp </td>
+                                     <td> D-infinity slope grid</td>
+                                 </tr>
+                                 <tr>
+                                     <td>sca </td>
+                                     <td> D-infinity contributing area grid</td>
+                                 </tr>
+                                 <tr>
+                                     <td>ss </td>
+                                     <td> Stream Source Grid</td>
+                                 </tr>
+                                 <tr>
+                                     <td>ssa </td>
+                                     <td> Accumulated Stream Source Grid</td>
+                                 </tr>
+                                 <tr>
+                                     <td>drp </td>
+                                     <td> Stream drop analysis table</td>
+                                 </tr>
+                                 <tr>
+                                     <td>src </td>
+                                     <td> Stream raster grid 1</td>
+                                 </tr>
+                                 <tr>
+                                     <td>ord </td>
+                                     <td> Network order grid</td>
+                                 </tr>
+                                 <tr>
+                                     <td>tree </td>
+                                     <td> Stream Network tree text file</td>
+                                 </tr>
+                                 <tr>
+                                     <td>coord </td>
+                                     <td> Network coordinates file</td>
+                                 </tr>
+                                 <tr>
+                                     <td>w </td>
+                                     <td> Watershed grid</td>
+                                 </tr>
+                                 <tr>
+                                     <td>sa </td>
+                                     <td> Slope Area</td>
+                                 </tr>
+                                 <tr>
+                                     <td>fel</td>
+                                     <td>Pit filled elevation file</td>
+                                 </tr>
+                                 <tr>
+                                     <td>StreamNetworkLine</td>
+                                     <td>Stream network Line shapefile giving the links in a stream network</td>
+                                 </tr>
+                                 <tr>
+                                     <td>StreamNetworkPoly</td>
+                                     <td>Stream network Polygon shapefile giving the links in a stream network</td>
+                                 </tr>
+                                 <tr>
+                                     <td>ThresOutput</td>
+                                     <td>Determines the stream drop threshold</td>
+                                 </tr>
+                                 <tr>
+                                     <td>srcTrn</td>
+                                     <td>A translated src raster with no data of -9999 assigned</td>
+                                 </tr>
+                                 <tr>
+                                     <td>srcTrnCrop</td>
+                                     <td>A src raster with no data values of -9999 which has been cropped to the basin file</td>
+                                 </tr>
+                                 <tr>
+                                     <td>Thresholds</td>
+                                     <td>A csv file showing the outputed thresholds tested within a drop analysis</td>
+                                 </tr>
+                                 <tr>
+                                     <td>W</td>
+                                     <td>The watersheds within the elevation file</td>
+                                 </tr>
+                                 <tr>
+                                     <td>twi</td>
+                                     <td>Topographic Wetness Index (TWI) of the elevation file</td>
+                                 </tr>
+                                 <tr>
+                                     <td>hand</td>
+                                     <td>Height Above Nearest Drainage (HAND) of the elevation file</td>
+                                 </tr>
+                                 <tr>
+                                     <td>drp</td>
+                                     <td>A tidied verion of the Thresholds csv file</td>
+                                 </tr>
+                                 <tr>
+                                     <td>ContaminationAreas</td>
+                                     <td>Contamination area polygon shapefile, highlighting areas of contamination from contamination source to outlet file</td>
+                                 </tr>
+                                 <tr>
+                                     <td>info</td>
+                                     <td>Provides raster informaiton of the elevation file</td>
+                                 </tr>
+                                 <tr>
+                                     <td>outputPixel</td>
+                                     <td>A csv highlighting pixel information of the raster</td>
+                                 </tr>
+                                 <tr>
+                                     <td>ctpt</td>
+                                     <td>A raster of contamination areas from the contamination source to the Outlet file</td>
+                                 </tr>
+                                 <tr>
+                                     <td>R</td>
+                                     <td>Raster version of the Source file</td>
+                                 </tr>
+                                 <tr>
+                                     <td>R1</td>
+                                     <td>Contamination raster with reasserted no data values</td>
+                                 </tr>
+                                 <tr>
+                                     <td>R2</td>
+                                     <td>A cropped contamination source raster by the basin input file</td>
+                                 </tr>
+                                 <tr>
+                                     <td>R3</td>
+                                     <td>Reasserted no data values of -9999 from R2</td>
+                                 </tr>
+                                 <tr>
+                                     <td>dg</td>
+                                     <td>Reasserted no data value of -9999 of Source raster file</td>
+                                 </tr>
+                                 <tr>
+                                     <td>dm</td>
+                                     <td>Reformatted Source raster to match pixel size of input elevation file</td>
+                                 </tr>
+                             </table>
+                             <ul></ul>
+                             <br>
+                             <hr/>
+                         </div>
+                     </div>
+                 </div>
+                 
+                 
+                 <div id="menu4" class="tab-pane fade">
+                     <h3>README</h3>
+                     <br>
+                     <div class="container">
+                         <div class="header">
+                         <ul>Preparing Input Data and TauDEM Command Line Tutorial <a href="static/tutorials/TutorialDocuments.zip">Tutorial Download</a></ul>
+                         <ul>Hydrology software used within this web application:     <a href=http://hydrology.usu.edu/taudem/taudem5/index.html>TauDEM Home Page</a></ul>
+                         <ul>TauDEM GitHub page:  <a href=https://github.com/dtarb/TauDEM>TauDEM Source Code</a></ul>
+                         <br>
+                         <hr/>
+                         </div>
+                     </div>
+                 </div>
+                 
+                 <div id="menu5" class="tab-pane fade">
+                     <h3>LICENCE</h3>
+                     <br>
+                     <div class="container">
+                         <div class="header">
+                             <h4>TauDEM</h4>
+                             <ul>Copyright (C) 2010-2015 David Tarboton, Utah State University</ul>
+                             <ul>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License version 3, 2007 as published by the Free Software Foundation.</ul>
+                             <ul>More information found at: <a href=http://hydrology.usu.edu/taudem/taudem5/license.html>http://hydrology.usu.edu/taudem/taudem5/license.html/</a></ul>
+                             <ul>Full GNU General Public License: <a href=http://www.gnu.org/licenses/gpl-3.0.html>http://www.gnu.org/licenses/gpl-3.0.html</a></ul>
+                             <br>
+                             <h4>The GEOM Web App and associated code</h4>
+                             <ul>The web app is free to use, but the code and it's IP belongs to Aberystwyth University.</ul>
+                             <ul>For more details please contact via email at GEOM@aber.ac.uk</ul>
+                             <br>
+                             <hr/>
+                         </div>
+                     </div>
+                 </div>
+                 
+                 <div id="menu7" class="tab-pane fade">
+                     <h3>GEOM Apps</h3>
+                     <br>
+                     <div class="container">
+                         <div class="header">
+                             <h4>Map App</h4>
+                             <form action="MapApp" method="get" enctype="multipart/form-data">
+                                 <input type="submit" value="Map App"  class="span2" style="margin:5px;">
+                             </form>
+                         </div>
+                     </div>
+                 </div>
+
+                 
+                 <div id="menu6" class="tab-pane fade">
+                     <h3>ABOUT GEOM</h3>
+                     <br>
+                     <div class="container">
+                         <div class="header">
+                             <p>The Geographical Data and Earth Observation for Monitoring (GEOM) operation, led by Aberystwyth University, in collaboration with QinetiQ, is helping Welsh companies exploit the fast-growing spatial intelligence market. It uses state-of-the-art satellite and drone technology to capture vital information for use by sectors, including agriculture, energy, security, environment, transport and infrastructure, helping companies to develop market-ready products and services.</p>
+                             <br>
+                             <p>GEOM aims to develop and embed innovation by piloting and testing new products and services to complement and augment activities already carried out by a company. To work with the company to introduce these products and services to the market.</p>
+                             <br>
+                             <p>Find out more by selecting the link below, or by contacting us via email!</p>
+                             <br>
+                             <hr/>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+        <div>
+         <p>This page was created by the GEOM Project Team - GEOM@aber.ac.uk</p>
+         <p>GEOM Website: <a href=https://www.aber.ac.uk/en/dges/research/earth-observation-laboratory/geomoperation/>https://www.aber.ac.uk/en/dges/research/earth-observation-laboratory/geomoperation/<a/></p>
+         <hr/>
+        </div>
+    </body>
+</html>
